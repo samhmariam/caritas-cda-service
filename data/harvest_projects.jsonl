@@ -1,0 +1,20 @@
+{"project_id":"PRJ_d6bc2bbb-2","client_id":"HV_2cb28fd8","name":"Acme Corp - Support & Maintenance","billable":0}
+{"project_id":"PRJ_65cca7fd-2","client_id":"HV_2cb28fd8","name":"Acme Corp - Implementation","billable":1}
+{"project_id":"PRJ_29027f23-0","client_id":"HV_2cb28fd8","name":"Acme Corp - Custom Development","billable":1}
+{"project_id":"PRJ_ee127800-0","client_id":"HV_2cb28fd8","name":"Acme Corp - Incident Response","billable":0}
+{"project_id":"PRJ_ffc5e4eb-a","client_id":"HV_5a16569c","name":"Stellar Bank - Support & Maintenance","billable":0}
+{"project_id":"PRJ_9c80cc95-b","client_id":"HV_5a16569c","name":"Stellar Bank - Implementation","billable":1}
+{"project_id":"PRJ_3f554430-7","client_id":"HV_5a16569c","name":"Stellar Bank - Custom Development","billable":1}
+{"project_id":"PRJ_f1253782-d","client_id":"HV_5a16569c","name":"Stellar Bank - Incident Response","billable":0}
+{"project_id":"PRJ_0a37750b-1","client_id":"HV_6842aeba","name":"TechFlow Solutions - Support & Maintenance","billable":0}
+{"project_id":"PRJ_29cff0ca-e","client_id":"HV_6842aeba","name":"TechFlow Solutions - Implementation","billable":1}
+{"project_id":"PRJ_240371da-a","client_id":"HV_6842aeba","name":"TechFlow Solutions - Custom Development","billable":1}
+{"project_id":"PRJ_54561acc-b","client_id":"HV_6842aeba","name":"TechFlow Solutions - Incident Response","billable":0}
+{"project_id":"PRJ_9b8da916-6","client_id":"HV_23a5968e","name":"Omega Retail - Support & Maintenance","billable":0}
+{"project_id":"PRJ_057e95d5-b","client_id":"HV_23a5968e","name":"Omega Retail - Implementation","billable":1}
+{"project_id":"PRJ_d7166590-b","client_id":"HV_23a5968e","name":"Omega Retail - Custom Development","billable":1}
+{"project_id":"PRJ_c50edb17-a","client_id":"HV_23a5968e","name":"Omega Retail - Incident Response","billable":0}
+{"project_id":"PRJ_6ee1dd0b-9","client_id":"HV_ae95b118","name":"London Pay - Support & Maintenance","billable":0}
+{"project_id":"PRJ_3b596513-4","client_id":"HV_ae95b118","name":"London Pay - Implementation","billable":1}
+{"project_id":"PRJ_ae14dc02-f","client_id":"HV_ae95b118","name":"London Pay - Custom Development","billable":1}
+{"project_id":"PRJ_3838dc38-0","client_id":"HV_ae95b118","name":"London Pay - Incident Response","billable":0}

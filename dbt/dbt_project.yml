@@ -1,0 +1,81 @@
+name: 'caritas_cda'
+version: '1.0.0'
+config-version: 2
+
+profile: 'caritas_cda'
+
+model-paths: ["models"]
+analysis-paths: ["analyses"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
+clean-targets:
+  - "target"
+  - "dbt_packages"
+  - "logs"
+
+# Global configurations
+vars:
+  # Multi-client support
+  client_name: "{{ env_var('DBT_CLIENT', 'acme') }}"
+  
+  # Query tagging for cost attribution
+  query_tag_enabled: true
+
+models:
+  caritas_cda:
+    # Staging models (1:1 with sources)
+    staging:
+      +materialized: view
+      +schema: staging
+      +tags: ["staging"]
+      +docs:
+        node_color: "#F4A460"
+    
+    # Intermediate models (business logic)
+    intermediate:
+      +materialized: view
+      +schema: intermediate
+      +tags: ["intermediate"]
+      +docs:
+        node_color: "#7CB9E8"
+    
+    # Marts (consumption layer)
+    marts:
+      +materialized: table
+      +schema: marts
+      +tags: ["marts"]
+      core:
+        +tags: ["core", "marts"]
+        +docs:
+          node_color: "#50C878"
+      analytics:
+        +tags: ["analytics", "marts"]
+        +docs:
+          node_color: "#6495ED"
+      activation:
+        +tags: ["activation", "marts"]
+        +docs:
+          node_color: "#FF6347"
+
+seeds:
+  +schema: seeds
+  +quote_columns: false
+
+snapshots:
+  +target_schema: snapshots
+  +strategy: timestamp
+  +updated_at: updated_at
+
+# Query comment with metadata
+query-comment:
+  comment: "dbt_run | client:{{ var('client_name') }} | env:{{ target.name }} | model:{{ node.name }}"
+  append: true
+
+on-run-start:
+  - "{{ log('🚀 Starting dbt run for client: ' ~ var('client_name') ~ ' in ' ~ target.name ~ ' environment', info=True) }}"
+
+on-run-end:
+  - "{{ log('✅ dbt run completed successfully!', info=True) }}"

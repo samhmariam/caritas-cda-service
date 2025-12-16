@@ -1,0 +1,7 @@
+{"refund_id":"re_95a8aed0-9a71-","charge_id":"ch_15012c43-a5bc-4b","created_at":"2025-01-10T00:00:00.000Z","amount_gbp":1136.4912855998853,"reason":"fraudulent"}
+{"refund_id":"re_f731dbf1-72ed-","charge_id":"ch_ae1454e7-7642-4b","created_at":"2025-03-12T00:00:00.000Z","amount_gbp":1216.4789612462105,"reason":"product_issue"}
+{"refund_id":"re_fcb49da9-e881-","charge_id":"ch_15012c43-a5bc-4b","created_at":"2025-01-08T00:00:00.000Z","amount_gbp":2554.6749744982935,"reason":"customer_request"}
+{"refund_id":"re_e49bed28-21e3-","charge_id":"ch_f09c889f-1a4d-48","created_at":"2024-10-04T00:00:00.000Z","amount_gbp":1177.3136712689793,"reason":"duplicate"}
+{"refund_id":"re_d4356e35-2606-","charge_id":"ch_d032e66f-e45e-4d","created_at":"2024-06-04T00:00:00.000Z","amount_gbp":1624.6550710448214,"reason":"customer_request"}
+{"refund_id":"re_6e2862cc-ea18-","charge_id":"ch_d7d06ed1-aad7-48","created_at":"2025-01-05T00:00:00.000Z","amount_gbp":7893.628837359331,"reason":"customer_request"}
+{"refund_id":"re_f6b460be-2aa6-","charge_id":"ch_72a4217c-37d5-4d","created_at":"2025-02-05T00:00:00.000Z","amount_gbp":6813.524995618896,"reason":"customer_request"}

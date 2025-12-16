@@ -1,0 +1,33 @@
+client:
+  name: _template
+  display_name: "Client Display Name"
+  
+snowflake:
+  database: CLIENT_DEV_RAW
+  warehouse:
+    name: CLIENT_DEV_TRANSFORMING_WH
+    size: X-SMALL
+    auto_suspend: 60
+  resource_monitor:
+    credit_quota: 20
+  
+s3:
+  raw_bucket: mdp-raw-dev
+  bronze_bucket: mdp-bronze-dev
+  silver_bucket: mdp-silver-dev
+  prefix: clients/client_name
+
+airbyte:
+  sources:
+    - source_name
+
+dbt:
+  threads: 4
+  schedules:
+    daily_refresh: "0 2 * * *"
+    
+census:
+  syncs:
+    - id: null
+      name: "sync_name"
+      enabled: true

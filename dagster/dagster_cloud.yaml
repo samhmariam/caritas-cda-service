@@ -1,0 +1,8 @@
+# Dagster Cloud deployment configuration
+locations:
+  - location_name: caritas_cda
+    code_source:
+      python_file: caritas_cda/definitions.py
+    build:
+      directory: ./dagster
+      registry: ghcr.io/your-org/caritas-cda

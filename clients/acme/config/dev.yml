@@ -1,0 +1,35 @@
+client:
+  name: acme
+  display_name: "Acme Corporation"
+  
+snowflake:
+  database: ACME_DEV_RAW
+  warehouse:
+    name: ACME_DEV_TRANSFORMING_WH
+    size: X-SMALL
+    auto_suspend: 60
+  resource_monitor:
+    credit_quota: 20
+  
+s3:
+  raw_bucket: mdp-raw-dev
+  bronze_bucket: mdp-bronze-dev
+  silver_bucket: mdp-silver-dev
+  prefix: clients/acme
+
+airbyte:
+  sources:
+    - hubspot
+    - stripe
+    - intercom
+
+dbt:
+  threads: 4
+  schedules:
+    daily_refresh: "0 2 * * *"  # 2 AM UTC
+    
+census:
+  syncs:
+    - id: null  # Populate after Census setup
+      name: "customer_activation"
+      enabled: true

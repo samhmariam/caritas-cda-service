@@ -1,0 +1,59 @@
+version: 2
+
+sources:
+  - name: raw_hubspot
+    description: Raw data from Airbyte Hubspot connector
+    database: "{{ var('client_name') | upper }}_{{ target.name | upper }}_RAW"
+    schema: raw
+    tables:
+      - name: hubspot_contacts
+        description: Raw HubSpot contacts data
+        columns:
+          - name: id
+            description: HubSpot contact ID
+          - name: properties
+            description: JSON object with contact properties
+          - name: _airbyte_extracted_at
+            description: Airbyte extraction timestamp
+      
+      - name: hubspot_deals
+        description: Raw HubSpot deals data
+        columns:
+          - name: id
+            description: HubSpot deal ID
+          - name: properties
+            description: JSON object with deal properties
+          - name: _airbyte_extracted_at
+            description: Airbyte extraction timestamp
+
+  - name: raw_stripe
+    description: Raw data from Airbyte Stripe connector
+    database: "{{ var('client_name') | upper }}_{{ target.name | upper }}_RAW"
+    schema: raw
+    tables:
+      - name: stripe_customers
+        description: Raw Stripe customers data
+        columns:
+          - name: id
+            description: Stripe customer ID
+          - name: email
+            description: Customer email
+          - name: created
+            description: Creation timestamp
+          - name: _airbyte_extracted_at
+            description: Airbyte extraction timestamp
+
+  - name: raw_intercom
+    description: Raw data from Airbyte Intercom connector
+    database: "{{ var('client_name') | upper }}_{{ target.name | upper }}_RAW"
+    schema: raw
+    tables:
+      - name: intercom_users
+        description: Raw Intercom users data
+        columns:
+          - name: id
+            description: Intercom user ID
+          - name: email
+            description: User email
+          - name: _airbyte_extracted_at
+            description: Airbyte extraction timestamp
