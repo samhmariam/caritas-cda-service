@@ -70,6 +70,47 @@ cd ../dagster
 dagster-cloud deploy
 ```
 
+## Upload Data to S3
+
+To upload JSONL files to the raw S3 bucket:
+
+```bash
+# Upload all files in data/ folder (with GZIP compression)
+uv run python scripts/upload_to_s3.py \
+  --source-dir ./data \
+  --bucket cda-raw-dev \
+  --client wise
+
+# Use specific AWS profile
+uv run python scripts/upload_to_s3.py \
+  --source-dir ./data \
+  --aws-profile my-aws-profile
+
+# Dry run (preview only)
+uv run python scripts/upload_to_s3.py --source-dir ./data --dry-run
+
+# Disable compression (upload as .jsonl instead of .jsonl.gz)
+uv run python scripts/upload_to_s3.py --source-dir ./data --no-compress
+
+# Force overwrite existing files
+uv run python scripts/upload_to_s3.py --source-dir ./data --force
+
+# Upload with specific run date
+uv run python scripts/upload_to_s3.py \
+  --source-dir ./data \
+  --run-date 2025-12-01
+```
+
+**Features:**
+- ✅ **GZIP Compression**: Files compressed before upload (.jsonl.gz format, ~70% size reduction)
+- ✅ **AWS Profile Support**: Specify AWS credentials profile with `--aws-profile`
+- ✅ Automatic JSONL validation
+- ✅ Table-level organization: `clients/{client}/{source}/{table}/run_date=YYYY-MM-DD/`
+- ✅ Progress tracking with rich UI
+- ✅ `_SUCCESS` marker files for atomic batch completion
+- ✅ Dry-run mode for safe testing
+- ✅ Skip existing files (use `--force` to overwrite)
+
 ## Environment Variables
 
 Copy `.env.example` to `.env` and populate:

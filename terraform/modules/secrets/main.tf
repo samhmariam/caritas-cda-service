@@ -27,7 +27,7 @@ variable "secrets" {
 
 # Create secrets in AWS Secrets Manager
 resource "aws_secretsmanager_secret" "client_secrets" {
-  for_each = var.secrets
+  for_each = nonsensitive(var.secrets)
   
   name        = "${var.client_name}/${var.environment}/${each.key}"
   description = "Secret for ${var.client_name} ${var.environment}: ${each.key}"
@@ -36,7 +36,7 @@ resource "aws_secretsmanager_secret" "client_secrets" {
 }
 
 resource "aws_secretsmanager_secret_version" "client_secrets" {
-  for_each = var.secrets
+  for_each = nonsensitive(var.secrets)
   
   secret_id     = aws_secretsmanager_secret.client_secrets[each.key].id
   secret_string = each.value
