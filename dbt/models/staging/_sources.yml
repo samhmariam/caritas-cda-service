@@ -1,59 +1,246 @@
 version: 2
 
 sources:
-  - name: raw_hubspot
-    description: Raw data from Airbyte Hubspot connector
-    database: "{{ var('client_name') | upper }}_{{ target.name | upper }}_RAW"
+  # ===================================
+  # HARVEST - Time Tracking & Invoicing
+  # ===================================
+  - name: raw_harvest
+    description: Raw data from Harvest time tracking and invoicing system
+    database: "{{ env_var('DBT_CLIENT', 'wise') | upper }}_{{ target.name | upper }}_RAW"
     schema: raw
     tables:
-      - name: hubspot_contacts
-        description: Raw HubSpot contacts data
+      - name: harvest_clients
+        description: Raw Harvest clients data (stored as VARIANT in RECORD_CONTENT)
         columns:
-          - name: id
-            description: HubSpot contact ID
-          - name: properties
-            description: JSON object with contact properties
-          - name: _airbyte_extracted_at
-            description: Airbyte extraction timestamp
+          - name: metadata_filename
+            description: Source S3 file path
+          - name: metadata_row_number
+            description: Row number within source file
+          - name: metadata_ingest_time
+            description: Timestamp when record was loaded into Snowflake
+          - name: record_content
+            description: Raw JSON record content (VARIANT)
       
-      - name: hubspot_deals
-        description: Raw HubSpot deals data
+      - name: harvest_projects
+        description: Raw Harvest projects data
         columns:
-          - name: id
-            description: HubSpot deal ID
-          - name: properties
-            description: JSON object with deal properties
-          - name: _airbyte_extracted_at
-            description: Airbyte extraction timestamp
+          - name: metadata_filename
+          - name: metadata_row_number
+          - name: metadata_ingest_time
+          - name: record_content
+      
+      - name: harvest_time_entries
+        description: Raw Harvest time entries data
+        columns:
+          - name: metadata_filename
+          - name: metadata_row_number
+          - name: metadata_ingest_time
+          - name: record_content
 
-  - name: raw_stripe
-    description: Raw data from Airbyte Stripe connector
-    database: "{{ var('client_name') | upper }}_{{ target.name | upper }}_RAW"
+  # ===================================
+  # INTACCT - General Ledger & Accounting
+  # ===================================
+  - name: raw_intacct
+    description: Raw data from Sage Intacct accounting system
+    database: "{{ env_var('DBT_CLIENT', 'wise') | upper }}_{{ target.name | upper }}_RAW"
     schema: raw
     tables:
+      - name: intacct_customers
+        description: Raw Intacct customers data
+        columns:
+          - name: metadata_filename
+          - name: metadata_row_number
+          - name: metadata_ingest_time
+          - name: record_content
+      
+      - name: intacct_gl_entries
+        description: Raw Intacct general ledger entries
+        columns:
+          - name: metadata_filename
+          - name: metadata_row_number
+          - name: metadata_ingest_time
+          - name: record_content
+      
+      - name: intacct_revenue_recognition
+        description: Raw Intacct revenue recognition data
+        columns:
+          - name: metadata_filename
+          - name: metadata_row_number
+          - name: metadata_ingest_time
+          - name: record_content
+
+  # ===================================
+  # JIRA - Project Management
+  # ===================================
+  - name: raw_jira
+    description: Raw data from Jira project management system
+    database: "{{ env_var('DBT_CLIENT', 'wise') | upper }}_{{ target.name | upper }}_RAW"
+    schema: raw
+    tables:
+      - name: jira_issues
+        description: Raw Jira issues/tickets data
+        columns:
+          - name: metadata_filename
+          - name: metadata_row_number
+          - name: metadata_ingest_time
+          - name: record_content
+
+  # ===================================
+  # MIXPANEL - Product Analytics
+  # ===================================
+  - name: raw_mixpanel
+    description: Raw data from Mixpanel product analytics
+    database: "{{ env_var('DBT_CLIENT', 'wise') | upper }}_{{ target.name | upper }}_RAW"
+    schema: raw
+    tables:
+      - name: mixpanel_events
+        description: Raw Mixpanel event tracking data
+        columns:
+          - name: metadata_filename
+          - name: metadata_row_number
+          - name: metadata_ingest_time
+          - name: record_content
+
+  # ===================================
+  # SALESFORCE - CRM
+  # ===================================
+  - name: raw_sf
+    description: Raw data from Salesforce CRM
+    database: "{{ env_var('DBT_CLIENT', 'wise') | upper }}_{{ target.name | upper }}_RAW"
+    schema: raw
+    tables:
+      - name: sf_accounts
+        description: Raw Salesforce accounts data
+        columns:
+          - name: metadata_filename
+          - name: metadata_row_number
+          - name: metadata_ingest_time
+          - name: record_content
+      
+      - name: sf_opportunities
+        description: Raw Salesforce opportunities data
+        columns:
+          - name: metadata_filename
+          - name: metadata_row_number
+          - name: metadata_ingest_time
+          - name: record_content
+      
+      - name: sf_users
+        description: Raw Salesforce users data
+        columns:
+          - name: metadata_filename
+          - name: metadata_row_number
+          - name: metadata_ingest_time
+          - name: record_content
+
+  # ===================================
+  # STRIPE - Payments & Billing
+  # ===================================
+  - name: raw_stripe
+    description: Raw data from Stripe payments platform
+    database: "{{ env_var('DBT_CLIENT', 'wise') | upper }}_{{ target.name | upper }}_RAW"
+    schema: raw
+    tables:
+      - name: stripe_balance_transactions
+        description: Raw Stripe balance transactions
+        columns:
+          - name: metadata_filename
+          - name: metadata_row_number
+          - name: metadata_ingest_time
+          - name: record_content
+      
+      - name: stripe_charges
+        description: Raw Stripe charges/payments
+        columns:
+          - name: metadata_filename
+          - name: metadata_row_number
+          - name: metadata_ingest_time
+          - name: record_content
+      
       - name: stripe_customers
         description: Raw Stripe customers data
         columns:
-          - name: id
-            description: Stripe customer ID
-          - name: email
-            description: Customer email
-          - name: created
-            description: Creation timestamp
-          - name: _airbyte_extracted_at
-            description: Airbyte extraction timestamp
+          - name: metadata_filename
+          - name: metadata_row_number
+          - name: metadata_ingest_time
+          - name: record_content
+      
+      - name: stripe_disputes
+        description: Raw Stripe payment disputes
+        columns:
+          - name: metadata_filename
+          - name: metadata_row_number
+          - name: metadata_ingest_time
+          - name: record_content
+      
+      - name: stripe_invoice_line_items
+        description: Raw Stripe invoice line items
+        columns:
+          - name: metadata_filename
+          - name: metadata_row_number
+          - name: metadata_ingest_time
+          - name: record_content
+      
+      - name: stripe_invoices
+        description: Raw Stripe invoices
+        columns:
+          - name: metadata_filename
+          - name: metadata_row_number
+          - name: metadata_ingest_time
+          - name: record_content
+      
+      - name: stripe_refunds
+        description: Raw Stripe refunds
+        columns:
+          - name: metadata_filename
+          - name: metadata_row_number
+          - name: metadata_ingest_time
+          - name: record_content
+      
+      - name: stripe_subscriptions
+        description: Raw Stripe subscriptions
+        columns:
+          - name: metadata_filename
+          - name: metadata_row_number
+          - name: metadata_ingest_time
+          - name: record_content
 
-  - name: raw_intercom
-    description: Raw data from Airbyte Intercom connector
-    database: "{{ var('client_name') | upper }}_{{ target.name | upper }}_RAW"
+  # ===================================
+  # ZENDESK - Customer Support
+  # ===================================
+  - name: raw_zendesk
+    description: Raw data from Zendesk customer support platform
+    database: "{{ env_var('DBT_CLIENT', 'wise') | upper }}_{{ target.name | upper }}_RAW"
     schema: raw
     tables:
-      - name: intercom_users
-        description: Raw Intercom users data
+      - name: zendesk_organizations
+        description: Raw Zendesk organizations/companies
         columns:
-          - name: id
-            description: Intercom user ID
-          - name: email
-            description: User email
-          - name: _airbyte_extracted_at
-            description: Airbyte extraction timestamp
+          - name: metadata_filename
+          - name: metadata_row_number
+          - name: metadata_ingest_time
+          - name: record_content
+      
+      - name: zendesk_ticket_events
+        description: Raw Zendesk ticket status change events
+        columns:
+          - name: metadata_filename
+          - name: metadata_row_number
+          - name: metadata_ingest_time
+          - name: record_content
+      
+      - name: zendesk_tickets
+        description: Raw Zendesk support tickets
+        columns:
+          - name: metadata_filename
+          - name: metadata_row_number
+          - name: metadata_ingest_time
+          - name: record_content
+      
+      - name: zendesk_time_entries
+        description: Raw Zendesk time tracking entries on tickets
+        columns:
+          - name: metadata_filename
+          - name: metadata_row_number
+          - name: metadata_ingest_time
+          - name: record_content

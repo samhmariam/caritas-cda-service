@@ -286,6 +286,32 @@ resource "snowflake_grant_privileges_to_account_role" "transformer_raw_read" {
   }
 }
 
+# Grant TRANSFORMER role SELECT on all existing tables in RAW schema
+resource "snowflake_grant_privileges_to_account_role" "transformer_raw_all_tables" {
+  account_role_name = snowflake_account_role.transformer.name
+  privileges        = ["SELECT"]
+  
+  on_schema_object {
+    all {
+      object_type_plural = "TABLES"
+      in_schema          = "\"${snowflake_database.main.name}\".\"${snowflake_schema.raw.name}\""
+    }
+  }
+}
+
+# Grant TRANSFORMER role SELECT on future tables in RAW schema
+resource "snowflake_grant_privileges_to_account_role" "transformer_raw_future_tables" {
+  account_role_name = snowflake_account_role.transformer.name
+  privileges        = ["SELECT"]
+  
+  on_schema_object {
+    future {
+      object_type_plural = "TABLES"
+      in_schema          = "\"${snowflake_database.main.name}\".\"${snowflake_schema.raw.name}\""
+    }
+  }
+}
+
 resource "snowflake_grant_privileges_to_account_role" "transformer_staging" {
   account_role_name = snowflake_account_role.transformer.name
   privileges        = ["USAGE", "CREATE TABLE", "CREATE VIEW"]

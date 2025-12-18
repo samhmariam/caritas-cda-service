@@ -19,7 +19,7 @@ clean-targets:
 # Global configurations
 vars:
   # Multi-client support
-  client_name: "{{ env_var('DBT_CLIENT', 'acme') }}"
+  client_name: "{{ env_var('DBT_CLIENT', 'wise') }}"
   
   # Query tagging for cost attribution
   query_tag_enabled: true
@@ -29,7 +29,6 @@ models:
     # Staging models (1:1 with sources)
     staging:
       +materialized: view
-      +schema: staging
       +tags: ["staging"]
       +docs:
         node_color: "#F4A460"
@@ -71,11 +70,11 @@ snapshots:
 
 # Query comment with metadata
 query-comment:
-  comment: "dbt_run | client:{{ var('client_name') }} | env:{{ target.name }} | model:{{ node.name }}"
+  comment: "dbt_run | client:{{ env_var('DBT_CLIENT', 'wise') }} | env:{{ target.name }} | model:{{ node.name }}"
   append: true
 
 on-run-start:
-  - "{{ log('🚀 Starting dbt run for client: ' ~ var('client_name') ~ ' in ' ~ target.name ~ ' environment', info=True) }}"
+  - "{{ log('🚀 Starting dbt run for client: ' ~ env_var('DBT_CLIENT', 'wise') ~ ' in ' ~ target.name ~ ' environment', info=True) }}"
 
 on-run-end:
   - "{{ log('✅ dbt run completed successfully!', info=True) }}"
