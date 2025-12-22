@@ -11,8 +11,8 @@ with unified_customers as (
 
 enriched as (
     select
-        {{ dbt_utils.generate_surrogate_key(['email']) }} as customer_key,
-        email,
+    {{ dbt_utils.generate_surrogate_key(['email_domain', 'stripe_customer_id']) }} as customer_key,
+    email_domain,
         first_name,
         last_name,
         company,

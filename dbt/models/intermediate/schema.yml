@@ -1,0 +1,179 @@
+version: 2
+
+models:
+  - name: int_identity_map
+    description: "Canonical identity mapping of all system-specific customer IDs to a single master_customer_id."
+    columns:
+      - name: master_customer_id
+        tests:
+          - not_null
+          - unique
+      - name: account_id
+        tests:
+          - unique:
+              config:
+                where: "account_id is not null"
+      - name: stripe_customer_id
+        tests:
+          - unique:
+              config:
+                where: "stripe_customer_id is not null"
+      - name: intacct_customer_id
+        tests:
+          - unique:
+              config:
+                where: "intacct_customer_id is not null"
+      - name: zendesk_organization_id
+        tests:
+          - unique:
+              config:
+                where: "zendesk_organization_id is not null"
+      - name: harvest_client_id
+        tests:
+          - unique:
+              config:
+                where: "harvest_client_id is not null"
+      - name: jira_account_key
+        tests:
+          - unique:
+              config:
+                where: "jira_account_key is not null"
+      - name: mixpanel_company_id
+        tests:
+          - unique:
+              config:
+                where: "mixpanel_company_id is not null"
+
+  - name: int_unified_revenue
+    description: "Unified revenue events across Stripe and Intacct with consistent schema and revenue_type/category flags."
+    columns:
+      - name: revenue_event_id
+        tests:
+          - not_null
+          - unique
+      - name: master_customer_id
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('int_identity_map')
+                field: master_customer_id
+
+  - name: int_mrr_arr_snapshot
+    description: "Operational MRR/ARR snapshot derived from Stripe subscription state (not GAAP revenue recognition)."
+    columns:
+      - name: mrr_arr_snapshot_id
+        tests:
+          - not_null
+          - unique
+      - name: master_customer_id
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('int_identity_map')
+                field: master_customer_id
+
+  - name: int_unified_cost
+    description: "Unified cost events across Harvest, Zendesk, and Jira with consistent schema."
+    columns:
+      - name: cost_event_id
+        tests:
+          - not_null
+          - unique
+      - name: master_customer_id
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('int_identity_map')
+                field: master_customer_id
+
+  - name: int_issue_resolution_chain
+    description: "Zendesk ticket → Jira issue → Harvest time linkage with resolution time and cost rollups."
+    columns:
+      - name: resolution_chain_id
+        tests:
+          - not_null
+          - unique
+      - name: master_customer_id
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('int_identity_map')
+                field: master_customer_id
+
+  - name: int_customer_health_score
+    description: "Customer health score (0-100) computed from revenue, support, payment, and (optionally) usage signals."
+    columns:
+      - name: master_customer_id
+        tests:
+          - not_null
+          - unique
+          - relationships:
+              arguments:
+                to: ref('int_identity_map')
+                field: master_customer_id
+
+  - name: int_customer_ltv
+    description: "Customer LTV and unit economics combining GAAP revenue with costs-to-serve."
+    columns:
+      - name: master_customer_id
+        tests:
+          - not_null
+          - unique
+          - relationships:
+              arguments:
+                to: ref('int_identity_map')
+                field: master_customer_id
+
+  - name: int_unified_customers
+    description: "Unified customer attributes used for the customer 360 dimension (currently Stripe-derived)."
+    columns:
+      - name: stripe_customer_id
+        tests:
+          - not_null
+          - unique
+      - name: email_domain
+        tests:
+          - not_null
+
+  - name: int_product_usage_metrics
+    description: "Customer-level daily product usage metrics from Mixpanel (DAU/MAU stickiness + rolling 30d engagement)."
+    columns:
+      - name: usage_metrics_id
+        tests:
+          - not_null
+          - unique
+      - name: master_customer_id
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('int_identity_map')
+                field: master_customer_id
+      - name: event_date
+        tests:
+          - not_null
+      - name: metrics_calculated_at
+        tests:
+          - not_null
+
+  - name: int_user_customer_map
+    description: "Map Mixpanel user identifiers (distinct_id) to master_customer_id using explicit company_id linking and confidence metadata."
+    columns:
+      - name: user_identifier
+        tests:
+          - not_null
+          - unique
+      - name: master_customer_id
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('int_identity_map')
+                field: master_customer_id
+      - name: mapping_calculated_at
+        tests:
+          - not_null

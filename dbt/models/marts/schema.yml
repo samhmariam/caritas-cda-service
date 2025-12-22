@@ -1,0 +1,95 @@
+version: 2
+
+models:
+  - name: fact_customer_profitability
+    description: "Monthly customer profitability (GAAP recognized revenue vs cost-to-serve), including an optional allocation of shared engineering costs."
+    columns:
+      - name: customer_profitability_id
+        tests:
+          - not_null
+          - unique
+      - name: master_customer_id
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('int_identity_map')
+                field: master_customer_id
+      - name: profitability_month
+        tests:
+          - not_null
+
+  - name: fact_customer_health
+    description: "Daily customer health snapshot combining product usage, support friction, and payment reliability signals for churn risk detection."
+    columns:
+      - name: customer_health_id
+        tests:
+          - not_null
+          - unique
+      - name: master_customer_id
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('int_identity_map')
+                field: master_customer_id
+      - name: as_of_date
+        tests:
+          - not_null
+      - name: health_score
+        tests:
+          - not_null
+
+  - name: fact_project_performance
+    description: "Delivery efficiency by Harvest project: sold-value proxy vs burned cost, utilization and overrun forecasting with at-risk flag."
+    columns:
+      - name: project_performance_id
+        tests:
+          - not_null
+          - unique
+      - name: master_customer_id
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('int_identity_map')
+                field: master_customer_id
+      - name: harvest_project_id
+        tests:
+          - not_null
+
+  - name: fact_revenue_at_risk
+    description: "Flags high-value customers (ARR > £50k) with declining product usage, optionally with support activity spikes."
+    columns:
+      - name: revenue_at_risk_id
+        tests:
+          - not_null
+          - unique
+      - name: master_customer_id
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('int_identity_map')
+                field: master_customer_id
+      - name: as_of_date
+        tests:
+          - not_null
+
+  - name: fact_revenue_gap
+    description: "Monthly booked (Salesforce expected monthly ARR) vs actual net revenue (Stripe invoice line items) and the gap between them."
+    columns:
+      - name: revenue_gap_id
+        tests:
+          - not_null
+          - unique
+      - name: master_customer_id
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('int_identity_map')
+                field: master_customer_id
+      - name: revenue_month
+        tests:
+          - not_null

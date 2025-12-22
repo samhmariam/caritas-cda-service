@@ -24,6 +24,13 @@ vars:
   # Query tagging for cost attribution
   query_tag_enabled: true
 
+  # Cost rate assumptions (GBP/hour). Override per-client/environment as needed.
+  support_cost_rate_tier_1_gbp_per_hour: 25
+  support_cost_rate_tier_2_gbp_per_hour: 35
+  support_cost_rate_tier_3_gbp_per_hour: 50
+  support_cost_rate_default_gbp_per_hour: 30
+  engineering_cost_rate_gbp_per_hour: 60
+
 models:
   caritas_cda:
     # Staging models (1:1 with sources)

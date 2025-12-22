@@ -1,0 +1,6 @@
+"company_name","harvest_client_id","intacct_customer_id","jira_account_key","mixpanel_company_id","salesforce_account_id","stripe_customer_id","zendesk_organization_id"
+"Acme Corp","HV_2cb28fd8","INTACCT_ACME_CORP","JIRA_ACMECORP","mp_fa9d4042-19a","SF_ACME_CORP_e178ebcb","cus_781709dc-a198-","ZD_91565dc4-d"
+"Stellar Bank","HV_5a16569c","INTACCT_STELLAR_BANK","JIRA_STELLARB","mp_5f7915d5-d27","SF_STELLAR_BANK_41a7bb6c","cus_2222931c-c417-","ZD_b9718283-a"
+"TechFlow Solutions","HV_6842aeba","INTACCT_TECHFLOW_SOLUTIONS","JIRA_TECHFLOW","mp_dbc44671-b0e","SF_TECHFLOW_SOLUTIONS_6de886f2","cus_12e419f2-4e20-","ZD_022403d5-0"
+"Omega Retail","HV_23a5968e","INTACCT_OMEGA_RETAIL","JIRA_OMEGARET","mp_b12e0748-887","SF_OMEGA_RETAIL_f4c56c01","cus_5aaa4a8e-b1be-","ZD_5483d9c2-b"
+"London Pay","HV_ae95b118","INTACCT_LONDON_PAY","JIRA_LONDONPA","mp_bd83aa9e-3b5","SF_LONDON_PAY_39421110","cus_5d5a1b8b-5a3a-","ZD_aa4542bc-e"

@@ -13,7 +13,7 @@ with customer_360 as (
 activation_targets as (
     select
         customer_key,
-        email,
+    email_domain,
         first_name,
         last_name,
         company,
